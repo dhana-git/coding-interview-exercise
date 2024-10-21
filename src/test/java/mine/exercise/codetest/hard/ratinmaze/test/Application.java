@@ -3,17 +3,17 @@ package mine.exercise.codetest.hard.ratinmaze.test;
 import java.util.Iterator;
 
 public interface Application {
-	boolean isOk(Position pos);
+    boolean isOk(Position pos);
 
-	boolean isGoal(Position pos);
+    boolean isGoal(Position pos);
 
-	boolean markAsPossible(Position pos);
+    boolean markAsPossible(Position pos);
 
-	boolean markAsDeadEnd(Position pos);
+    boolean markAsDeadEnd(Position pos);
 
-	Position getStart();
+    Position getStart();
 
-	Position getEnd();
+    Position getEnd();
 
-	Iterator<Position> iterator(Position pos);
+    Iterator<Position> iterator(Position pos);
 }

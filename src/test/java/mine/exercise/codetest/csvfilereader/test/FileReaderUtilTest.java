@@ -1,43 +1,42 @@
 package mine.exercise.codetest.csvfilereader.test;
 
+import mine.exercise.codetest.csvfilereader.FileParserException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import mine.exercise.codetest.csvfilereader.FileParserException;
-
 public class FileReaderUtilTest {
 
-	private static String DEFAULT_FILE_PATH = "./src/test/resources/sample-csv-test-file.csv";
+    private static String DEFAULT_FILE_PATH = "./src/test/resources/sample-csv-test-file.csv";
 
-	@Test(expected = FileParserException.class)
-	public void checkIfExcpetionIsThrownOnReadingInvalidFile() throws FileParserException {
-		readFromLocalFileSystem("blah/blah");
-	}
+    public static List<String> readFromLocalFileSystem(String filePath) throws FileParserException {
+        try {
+            return Files.readAllLines(Paths.get(filePath));
+        } catch (IOException e) {
+            throw new FileParserException("Unable to parse a file.");
+        }
+    }
 
-	@Test
-	public void checkForValidFilePath() throws FileParserException {
-		List<String> fileContent = readFromLocalFileSystem(DEFAULT_FILE_PATH);
-		Assert.assertNotNull(fileContent);
-	}
+    @Test
+    public void checkIfExcpetionIsThrownOnReadingInvalidFile() throws FileParserException {
+        Assertions.assertThrows(FileParserException.class, () -> readFromLocalFileSystem("blah/blah"));
+    }
 
-	@Test
-	public void checkForValidFileContent() throws FileParserException {
-		List<String> fileContent = readFromLocalFileSystem(DEFAULT_FILE_PATH);
-		Assert.assertNotNull(fileContent);
-		Assert.assertTrue(fileContent.size() > 0);
-	}
+    @Test
+    public void checkForValidFilePath() throws FileParserException {
+        List<String> fileContent = readFromLocalFileSystem(DEFAULT_FILE_PATH);
+        Assertions.assertNotNull(fileContent);
+    }
 
-	public static List<String> readFromLocalFileSystem(String filePath) throws FileParserException {
-		try {
-			return Files.readAllLines(Paths.get(filePath));
-		} catch (IOException e) {
-			throw new FileParserException("Unable to parse a file.");
-		}
-	}
+    @Test
+    public void checkForValidFileContent() throws FileParserException {
+        List<String> fileContent = readFromLocalFileSystem(DEFAULT_FILE_PATH);
+        Assertions.assertNotNull(fileContent);
+        Assertions.assertTrue(fileContent.size() > 0);
+    }
 
 }
